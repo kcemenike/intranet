@@ -1,0 +1,46 @@
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngIf="sidebar.sidebarStatus">
+  <ngb-panel title="Main">
+    <ng-template ngbPanelContent>
+      <ul class="nav flex-column">
+        <li class="nav-item" *ngFor="let action of sidebar.actions.primary">
+          <a class="nav-link" [routerLink]="[action.url]" routerLinkActive="active">
+            <i class="{{ action.icon }}"></i>{{ action.title }}
+          </a>
+        </li>
+      </ul>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel title="Entities">
+    <ng-template ngbPanelContent>
+      <ul class="nav flex-column">
+        <li class="nav-item" *ngFor="let action of sidebar.actions.secondary">
+          <a class="nav-link" [routerLink]="[action.url]" routerLinkActive="active">
+            <i class="{{ action.icon }}"></i>{{ action.title }}
+          </a>
+        </li>
+      </ul>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel title="User">
+    <ng-template ngbPanelContent>
+      <ul class="nav flex-column">
+        <li class="nav-item" *ngFor="let action of sidebar.actions.person">
+          <a class="nav-link" [routerLink]="[action.url]" routerLinkActive="active">
+            <i class="{{ action.icon }}"></i>{{ action.title }}
+          </a>
+        </li>
+      </ul>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel title="App">
+    <ng-template ngbPanelContent>
+      <ul class="nav flex-column">
+        <li class="nav-item" *ngFor="let action of sidebar.actions.tertiary">
+          <a class="nav-link" [routerLink]="[action.url]" routerLinkActive="active">
+            <i class="{{ action.icon }}"></i>{{ action.title }}
+          </a>
+        </li>
+      </ul>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

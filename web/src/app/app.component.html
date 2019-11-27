@@ -1,0 +1,16 @@
+<div class="container-fluid p-0 m-0">
+
+    <wg-header *ngIf="header$ | async as header" [header]="header" (search)="onSearch($event)"
+        (toggle)="onToggle($event)"></wg-header>
+
+    <div class="row justify-content-start">
+
+        <wg-sidebar [class]="['col-2']" *ngIf="sidebar$ | async as sidebar" [sidebar]="sidebar" ></wg-sidebar>
+    
+        <div [class]="{ 'col-10': header?.sidebarStatus, 'col-2': !header?.sidebarStatus }">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+
+</div>

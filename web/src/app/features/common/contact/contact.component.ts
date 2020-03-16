@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ArticleContract } from 'src/app/webgets/article/article.contract';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,7 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  contact$: Observable<ArticleContract>
+
+  constructor(
+    private commonService: CommonService
+  ) {
+    this.contact$ = this.commonService.contact()
+    this.commonService.loadArticle('contact')
+  }
 
   ngOnInit() {
   }

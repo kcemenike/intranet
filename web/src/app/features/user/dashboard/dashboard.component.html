@@ -1,1 +1,10 @@
-<p>dashboard works!</p>
+<div class="row mx-2 mx-sm-5 my-5 m-sm-5">
+    <div class="card border-0 col-3 m-0 p-0">
+    
+        <wg-sidebar class="m-0 p-0" *ngIf="sidebar$ | async as sidebar" [sidebar]="sidebar" ></wg-sidebar>
+    
+    </div>
+    <div class="card border-0 col-8 offset-1 m-0 pl-5 pr-0">
+      [Dashboard]
+    </div>
+</div>

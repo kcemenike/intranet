@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { BrandContract, PersonContract, ActionsContract } from 'src/app/services/contracts';
 import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
 
-export interface Header{
+export interface HeaderContract{
   brand: BrandContract
   person: PersonContract
   actions: {
@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
 
   faBars = faBars
   faSearch = faSearch
-  @Input() header: Header;
+  
+  @Input() header: HeaderContract;
   @Output() search = new EventEmitter<string>();
   @Output() toggle = new EventEmitter<boolean>();
   

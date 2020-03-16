@@ -1,0 +1,21 @@
+<footer class="row col-8 p-5 mx-auto text-center">
+    <hr />
+    <p class="col-12">
+        <a class="mx-1"  *ngFor="let link of footer.links" [routerLink]="[link.url]" >{{ link.title }}</a>
+    </p>
+    <p class="col-12">
+        &copy; 2019 <a href="http://fipl-ng.com/" target="_blank">First Independent Power Limited</a>
+    </p>
+    <p class="col-12">
+        <a class="mx-1" href="https://www.facebook.com/FIPL-335886303680372/" target="_blank">
+            <fa-icon [icon]="faFacebook"></fa-icon>
+        </a>
+        <a class="mx-1" href="https://twitter.com/FIPLng" target="_blank">
+            <fa-icon [icon]="faTwitter"></fa-icon>
+        </a>
+        <a class="mx-1" href="https://www.linkedin.com/showcase/first-independent-power-limited/" target="_blank">
+            <fa-icon [icon]="faLinkedin"></fa-icon>
+        </a>
+        <a class="mx-1" [routerLink]="['./']" fragment="#">Back to top</a>
+    </p>
+</footer>

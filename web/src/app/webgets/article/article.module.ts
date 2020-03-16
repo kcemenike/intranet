@@ -7,7 +7,8 @@ import { ArticleComponent } from './article.component';
 @NgModule({
   declarations: [ArticleComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+  ],
+  exports: [ArticleComponent],
 })
 export class ArticleModule { }

@@ -1,1 +1,1 @@
-<p>collection works!</p>
+<p *ngIf="collection$ | async as collection">{{ JSON.stringify(collection) }}</p>

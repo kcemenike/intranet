@@ -4,7 +4,9 @@ import { Observable ,  of } from 'rxjs'
 
 export const CONFIG_DATA = new InjectionToken<Object>('config.data')
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Config {
   constructor(@Inject(CONFIG_DATA) private config: Object) {}
 

@@ -1,6 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromGate from './gate.reducer';
+import * as fromReducer from './gate.reducer';
 
-export const selectGateState = createFeatureSelector<fromGate.State>(
-  fromGate.gateFeatureKey
+export const state = createFeatureSelector<fromReducer.State>(
+  fromReducer.gateFeatureKey
 );
+
+export const user = createSelector(state, state => state.user)
+ 

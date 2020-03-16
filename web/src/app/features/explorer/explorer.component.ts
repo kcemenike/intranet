@@ -17,15 +17,18 @@ export class ExplorerComponent implements OnInit {
   constructor(
     private explorerService: ExplorerService,
     private route: ActivatedRoute,
-  ) { }
-
-  ngOnInit() {    
-    // this.explorer.initialise()
+  ) {
+    this.explorerService.initialise()
     this.route.parent.url.subscribe((urlSegment) => {
-      if (urlSegment.length > 0) {
-        this.explorerService.entity(singular(urlSegment[0].path)).getAll()
+      console.log({ urlSegment })
+      if (urlSegment.length > 1) {
+        this.explorerService.upsertName(singular(urlSegment[1].path))
+        this.explorerService.upsertDesc('...')
       }
     })
+  }
+
+  ngOnInit() {
   }
 
 }

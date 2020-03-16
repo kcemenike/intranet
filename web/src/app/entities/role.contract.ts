@@ -1,5 +1,5 @@
 import { Entity } from './entity.contract';
 
-export interface User extends Entity {
+export interface Role extends Entity {
 
 } 

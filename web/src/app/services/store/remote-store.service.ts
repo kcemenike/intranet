@@ -17,7 +17,9 @@ import {
 } from '../contracts/store/query.contract'
 import { outject } from '../core/utils.functions'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RemoteStore<M = any> extends RemoteWrapper
   implements StoreContract<M> {
   public config: Config

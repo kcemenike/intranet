@@ -5,7 +5,9 @@ import { Observable ,  forkJoin, empty } from "rxjs";
 import { mergeMap, map, catchError } from "rxjs/operators";
 import { Config } from "./config.service";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class EmailService{
 
     constructor(

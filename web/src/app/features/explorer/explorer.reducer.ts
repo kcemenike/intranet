@@ -14,7 +14,7 @@ export function reducer(state: State, action): State {
     on(ExplorerActions.UpsertName, (state, { name }) => { return { ...state, name } }),
     on(ExplorerActions.UpsertDesc, (state, { desc }) => { return { ...state, desc } }),
     on(ExplorerActions.UpsertLayoutType, (state, { kind }) => { return { ...state, kind } }),
-    on(ExplorerActions.UpsertSelected, (state, { selected }) => { return { ...state, selected } }),
+    on(ExplorerActions.UpsertSelected, (state, { selected }) => { return { ...state, selected: [ ...state.selected, ...selected ] } }),
     on(ExplorerActions.ResetSelected, (state) => { return { ...state, selected: [] } }),
   )(state, action)
 }

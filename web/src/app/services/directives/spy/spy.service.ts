@@ -28,7 +28,9 @@ import { Subject ,  Observable ,  from ,  forkJoin ,  combineLatest ,  Subscript
  * Tracks page activity and store locally,
  * transmit to server on subsequent visit
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SpyService {
   sessionObs: Subscription
   pageObs: Subscription

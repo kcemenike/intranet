@@ -9,7 +9,7 @@ class ForumableController extends Controller
 {
     public function index()
     {
-        $forumables = Forumable::latest()->get();
+        $forumables = Forumable::latest()->paginate($this->perPage);
 
         return response(['data' => $forumables ], 200);
     }

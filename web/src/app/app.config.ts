@@ -1,6 +1,4 @@
-import { UrlSegment, UrlSegmentGroup, Routes } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
-import { ActionsContract, UserContract, BrandContract, PersonContract, PageContract, SubscribeContract, AppMetaContract, JSONContract } from './services/contracts';
+import { ActionsContract, UserContract, BrandContract, PersonContract, PageContract, AppMetaContract, JSONContract } from './services/contracts';
 import { environment } from 'src/environments/environment';
 import { titleCase } from './services/core';
 
@@ -26,67 +24,11 @@ export const ENTITIES: string[] = [
   'role',
 ]
 
-export function entityMatcher(
-  segments: UrlSegment[],
-  segmentGroup: UrlSegmentGroup,
-  route: Route
-) {
-  return (
-    segments.length > 0 &&
-    ENTITIES.includes(segments[0].path.toLowerCase())
-  ) ? ({ consumed: [segments[0]] })
-    : null
-}
-
-export const APP_ROUTES: Routes = [
-  {
-    matcher: entityMatcher,
-    loadChildren: './features/explorer/explorer.module#ExplorerModule',
-  },
-  {
-    path: 'user',
-    loadChildren: './features/user/user.module#UserModule',
-  },
-  {
-    path: 'gate',
-    loadChildren: './features/gate/gate.module#GateModule'
-  },
-  {
-    path: 'docs',
-    loadChildren: './features/docs/docs.module#DocsModule'
-  },
-  {
-    path: 'events',
-    loadChildren: './features/events/events.module#EventsModule'
-  },
-  {
-    path: 'forums',
-    loadChildren: './features/forums/forums.module#ForumsModule'
-  },
-  {
-    path: 'ideas',
-    loadChildren: './features/ideas/ideas.module#IdeasModule'
-  },
-  {
-    path: 'news',
-    loadChildren: './features/news/news.module#NewsModule'
-  },
-  {
-    path: '',
-    pathMatch: 'prefix',
-    loadChildren: './features/common/common.module#CommonModule'
-  },
-  {
-    path: '**',
-    redirectTo: 'error',
-  },
-];
-
 export const primaryActions: ActionsContract[] = [
   {
     title: 'Home',
     icon: 'person_add',
-    url: '',
+    url: '/',
     type: 'raised-button',
   },
   {
@@ -98,25 +40,25 @@ export const primaryActions: ActionsContract[] = [
   {
     title: 'Docs',
     icon: 'person_add',
-    url: 'docs',
+    url: '/docs',
     type: 'raised-button',
   },
   {
     title: 'Events',
     icon: 'person_add',
-    url: 'events',
+    url: '/events',
     type: 'raised-button',
   },
   {
     title: 'Forums',
     icon: 'person_add',
-    url: 'forums',
+    url: '/forums',
     type: 'raised-button',
   },
   {
     title: 'Ideas',
     icon: 'person_add',
-    url: 'ideas',
+    url: '/ideas',
     type: 'raised-button',
   },
 ]
@@ -125,7 +67,7 @@ export const secondaryActions: ActionsContract[] = ENTITIES.map((entity => {
   return {
     title: titleCase(entity),
     icon: 'person_add',
-    url: entity.toLowerCase(),
+    url: `/entity/${entity.toLowerCase()}`,
     type: 'raised-button',
   }
 }))
@@ -133,15 +75,15 @@ export const secondaryActions: ActionsContract[] = ENTITIES.map((entity => {
 export const tertiaryActions: ActionsContract[] = [
   {
     title: 'About Us',
-    url: 'about'
+    url: '/about'
   },
   {
     title: 'Contact Us',
-    url: 'contacts'
+    url: '/contact'
   },
   {
     title: 'Terms of Service',
-    url: 'terms' 
+    url: '/terms' 
   }
 ]
 
@@ -150,11 +92,11 @@ export const personActions: (user?: UserContract) => ActionsContract[] = (user?:
     return [
       {
         title: 'Login',
-        url: 'gate/sign-in'
+        url: '/gate/sign-in'
       },
       {
         title: 'Register',
-        url: 'gate/sign-up'
+        url: '/gate/sign-up'
       },
     ]
   }
@@ -162,31 +104,31 @@ export const personActions: (user?: UserContract) => ActionsContract[] = (user?:
   return [
     {
       title: 'Dashboard',
-      url: 'user/dashboard' 
+      url: '/user/dashboard' 
     },
     {
       title: 'Profile',
-      url: 'user/profile',
+      url: '/user/profile',
       type: 'raised-button'
     },
     {
       title: 'Preference',
-      url: 'user/preference',
+      url: '/user/preference',
       type: 'raised-button'
     },
     ...((['admin'].includes(user.type)) ? [{
       title: 'Settings',
-      url: 'user/settings',
+      url: '/user/settings',
       type: 'raised-button'
     }] : []),
     {
       title: 'Change Password',
-      url: 'user/change-password',
+      url: '/user/change-password',
       type: 'raised-button'
     },
     {
       title: 'Sign Out',
-      url: 'g/sign-out'
+      url: '/gate/sign-out'
     },
   ]
 }
@@ -198,13 +140,11 @@ export const AUTO_JSON_COLUMNS = [
 
 export const BASE_URL = environment.production
   ? 'https://portal.fipl-ng.com'
-  : 'http://localhost:8000'
+  : 'http://127.0.0.1:8000'
 
 export const APP_BASE_CONFIG = {
   urls: {
     upload: BASE_URL + '/upload',
-    signIn: '/',
-    dashboard: '/',
   },
   store: {
     remote: {
@@ -253,6 +193,10 @@ export const APP_BASE_CONFIG = {
       },
     },
   },
+  auth: {
+    signInUrl: '/gate/sign-in',
+    dashboardUrl:  '/user/dashboard',
+  }
 }
 
 export interface AppConfigContract extends JSONContract {

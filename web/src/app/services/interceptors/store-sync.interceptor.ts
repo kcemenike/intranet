@@ -11,7 +11,9 @@ import {
 import { Observable } from 'rxjs'
 import { tap } from 'rxjs/operators'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class StoreSyncInterceptor implements HttpInterceptor {
   // constructor(private cache: RequestCache) {}
 

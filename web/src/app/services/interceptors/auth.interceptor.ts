@@ -6,7 +6,9 @@ import { Observable ,  forkJoin } from 'rxjs'
 
 import { AuthService } from '../core/auth.service'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 

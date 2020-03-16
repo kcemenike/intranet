@@ -14,7 +14,9 @@ export interface PrivilegeActions{
   menu: () => ActionsContract[]
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PrivilegeService<U = JSONContract>{
 
   private entityName: string

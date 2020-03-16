@@ -1,18 +1,18 @@
-<form role="form" [formGroup]="formGroup" (ngSubmit)="onSubmit(payload">
+<form role="form" [formGroup]="formGroup" (ngSubmit)="onSubmit(payload)">
 
     <div class="media">
         <div class="media-body">
             <h3 class="flex justify-between mt-0">
                 <!--title-->
                 {{ form.title | titlecase }}
-                <!--actions-->
-                <wg-actions *ngIf="form.actions" [actions]="form.actions"></wg-actions>
             </h3>
             <p class="mb1">{{ form.description }}</p>
         </div>
     </div>
 
     <formly-form [form]="formGroup" [model]="payload" [fields]="fields" [options]="options">
-        <button class="btn btn-{{ form.buttonClass || 'primary' }}" type="submit" [disabled]="!formGroup.valid">{{ (form.buttonName || 'submit') | titlecase }}</button>
     </formly-form>
+
+    <button class="btn btn-{{ form.buttonClass || 'primary' }}" type="submit" [disabled]="!formGroup.valid">{{ (form.buttonName || 'submit') | titlecase }}</button>
+
 </form>

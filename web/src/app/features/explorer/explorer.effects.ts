@@ -14,42 +14,42 @@ export class ExplorerEffects {
     mergeMap((action) => {
       return from([])
     }),
-  ));
+  ), { dispatch: false });
 
   UpsertName$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.UpsertName),
     mergeMap((action) => {
       return from([])
     }),
-  ));
+  ), { dispatch: false });
 
   UpsertDesc$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.UpsertDesc),
     mergeMap((action) => {
       return from([])
     }),
-  ));
+  ), { dispatch: false });
 
   UpsertLayoutType$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.UpsertLayoutType),
     mergeMap((action) => {
       return from([])
     }),
-  ));
+  ), { dispatch: false });
 
   UpsertSelected$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.UpsertSelected),
     mergeMap((action) => {
       return from([])
     }),
-  ));
+  ), { dispatch: false });
 
   ResetSelected$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.ResetSelected),
     mergeMap((action) => {
       return from([])
     }),
-  ));
+  ), { dispatch: false });
 
   constructor(
     private actions$: Actions,

@@ -3,14 +3,15 @@
     <wg-header *ngIf="header$ | async as header" [header]="header" (search)="onSearch($event)"
         (toggle)="onToggle($event)"></wg-header>
 
-    <div class="row justify-content-start">
-
-        <wg-sidebar [class]="['col-2']" *ngIf="sidebar$ | async as sidebar" [sidebar]="sidebar" ></wg-sidebar>
+    <div class="row justify-content-start m-0">
     
-        <div [class]="{ 'col-10': header?.sidebarStatus, 'col-2': !header?.sidebarStatus }">
+        <div [class]="['col-12']">
             <router-outlet></router-outlet>
         </div>
 
     </div>
 
+    <wg-footer *ngIf="footer$ | async as footer" [footer]="footer"></wg-footer>
+
 </div>
+<wg-toast></wg-toast>

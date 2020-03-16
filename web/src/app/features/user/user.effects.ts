@@ -1,24 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 
-import { concatMap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
-import { UserActionTypes, UserActions } from './user.actions';
-
+import { mergeMap } from 'rxjs/operators';
+import { from } from 'rxjs';
+import * as fromActions from './user.actions'
 
 
 @Injectable()
 export class UserEffects {
 
+  Initialise$ = createEffect(() => this.actions$.pipe(
+    ofType(fromActions.Initialise),
+    mergeMap((action) => {
+      return from([])
+    }),
+  ), { dispatch: false })
 
-  @Effect()
-  loadUsers$ = this.actions$.pipe(
-    ofType(UserActionTypes.LoadUsers),
-    /** An EMPTY observable only emits completion. Replace with your own observable API request */
-    concatMap(() => EMPTY)
-  );
+  // SignInStart$ = createEffect(() => this.actions$.pipe(
+  //   ofType(fromActions.SignInStart),
+  //   mergeMap((user) => {
+  //     return this.auth.signIn(user.email, user.password).pipe(
+  //       map((status) => {
+  //         return status ? fromActions.SignInSuccess() : fromActions.SignInFailure({ reason: 'Failed sign in attempt...try again' })
+  //       }),
+  //       catchError((e) => {
+  //         return of(fromActions.SignInFailure({ reason: e && e.error && e.error.error }))
+  //       }),
+  //     )
+  //   }),
+  // ))
 
-
-  constructor(private actions$: Actions<UserActions>) {}
+  constructor(private actions$: Actions) {}
 
 }

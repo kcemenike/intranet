@@ -5,10 +5,10 @@ import * as fromSelectors from './app.selectors'
 import { Store, select } from '@ngrx/store';
 import { BrandContract, PersonContract, PageContract, ActionsContract, AppMetaContract, JSONContract } from './services/contracts';
 import { Observable, combineLatest } from 'rxjs';
-import { Header } from './webgets/header/header.component';
+import { HeaderContract } from './webgets/header/header.component';
 import { map } from 'rxjs/operators';
-import { personActions } from './app.config';
 import { Sidebar } from './webgets/sidebar/sidebar.component';
+import { FooterContract } from './webgets/footer/footer.component';
 
 @Injectable({
   providedIn: 'root'
@@ -55,8 +55,8 @@ export class AppService {
     this.store.dispatch(fromActions.ResetEntities())
   }
  
-  upsertActions (actions: ActionsContract[]): void{
-    this.store.dispatch(fromActions.UpsertActions({ actions }))
+  upsertActions (type: string, actions: ActionsContract[]): void{
+    this.store.dispatch(fromActions.UpsertActions({ [type]: actions }))
   }
  
   resetActions (): void{
@@ -151,7 +151,7 @@ export class AppService {
     )
   }
 
-  header(): Observable<Header>{
+  header(): Observable<HeaderContract>{
     return combineLatest(
       this.store.select(fromSelectors.brand),
       this.store.select(fromSelectors.person),
@@ -174,6 +174,18 @@ export class AppService {
     )
   }
 
+  footer(): Observable<FooterContract>{
+    return combineLatest(
+      this.store.select(fromSelectors.actions(), { type: 'tertiary' }),
+    ).pipe(
+      map(([tertiary]) => {
+        return {
+          links: tertiary
+        }
+      })
+    )
+  }
+
   sidebar(): Observable<Sidebar>{
     return combineLatest(
       this.store.select(fromSelectors.person),
@@ -187,7 +199,7 @@ export class AppService {
             primary: actions['primary'],
             secondary: actions['secondary'],
             tertiary: actions['tertiary'],
-            person: personActions(),
+            person: actions['person'],
           },
           sidebarStatus,
         }

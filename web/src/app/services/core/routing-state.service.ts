@@ -11,7 +11,9 @@ import {
 import { Observable } from 'rxjs'
 import { filter, pairwise, map, tap } from 'rxjs/operators'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RoutingStateService {
   private history = []
 

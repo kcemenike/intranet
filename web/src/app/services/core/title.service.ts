@@ -3,7 +3,9 @@ import { Title } from '@angular/platform-browser'
 
 import { Observable ,  of } from 'rxjs'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TitleService {
   public constructor (private t: Title) {}
 

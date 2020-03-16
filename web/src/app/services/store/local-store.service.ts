@@ -5,7 +5,9 @@ import { QueryContract } from '../contracts/store/query.contract'
 import { StoreContract } from '../contracts/store/store.contract'
 import { Config } from '../core/config.service'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LocalStore<M = any> extends WebWrapper<M> implements StoreContract<M> {
   constructor (config: Config) {
     super(localStorage, config)

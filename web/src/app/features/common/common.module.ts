@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule as CommonNGModule } from '@angular/common';
 import { CommonComponent } from './common.component';
 import { StartComponent } from './start/start.component';
 import { ErrorComponent } from './error/error.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { TermsComponent } from './terms/terms.component';
-import { COMMON_ROUTES } from './common.config';
-import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { CommonEffects } from './common.effects';
+import { COMMON_ROUTES } from './common.routes';
+import { SharedModule } from 'src/app/shared.module';
+import { ArticleModule } from 'src/app/webgets/article/article.module';
+import * as fromReducer from './common.reducer';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -23,12 +24,11 @@ import { CommonEffects } from './common.effects';
     TermsComponent,
   ],
   imports: [
-    CommonNGModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild(COMMON_ROUTES),
-    // StoreModule.forFeature('common', reducer),
-    EffectsModule.forFeature([CommonEffects])
+    StoreModule.forFeature(fromReducer.commonFeatureKey, fromReducer.reducer),
+    EffectsModule.forFeature([CommonEffects]),
+    ArticleModule,
   ],
   exports: []
 })

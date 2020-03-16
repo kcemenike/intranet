@@ -1,35 +1,23 @@
 
-import { CommonActions, CommonActionTypes } from './common.actions';
-import { createReducer } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
+import * as fromActions from './common.actions';
+import { COMMON_CONFIG, CommonConfigContract } from './common.config';
 
 export const commonFeatureKey = 'common';
 
-export interface State {
+export type State = CommonConfigContract
 
-}
+export const initialState: State = COMMON_CONFIG
 
-export const initialState: State = {
-
-};
-
-// const scoreboardReducer = createReducer(
-//   initialState,
-//   on(ScoreboardPageActions.homeScore, state => ({ ...state, home: state.home + 1 })),
-//   on(ScoreboardPageActions.awayScore, state => ({ ...state, away: state.away + 1 })),
-//   on(ScoreboardPageActions.resetScore, state => ({ home: 0, away: 0 })),
-//   on(ScoreboardPageActions.setScores, (state, { game }) => ({ home: game.home, away: game.away }))
-// );
-
-// export function reducer(state: State | undefined, action: Action) {
-//   return scoreboardReducer(state, action);
-// }
-// export function reducer(state = initialState, action: CommonActions): State {
-//   switch (action.type) {
-
-//     case CommonActionTypes.LoadCommons:
-//       return state;
-
-//     default:
-//       return state;
-//   }
-// }
+export function reducer(state: State, action): State {
+    return createReducer(initialState,
+      on(fromActions.Initialise, (state) => state),
+      on(fromActions.LoadArticle, (state, { kind }) => { return { ...state, kind } }),
+      on(fromActions.LoadArticleSuccess, (state, { kind, content }) => { return { ...state, [kind]: content } }),
+      on(fromActions.LoadArticleFail, (state, { kind, reason }) => { return { ...state, kind } }),
+      on(fromActions.EditArticle, (state, { kind }) => { return { ...state, kind } }),
+      on(fromActions.UpdateArticle, (state, { kind, content }) => { return { ...state, kind, [kind]: content } }),
+      on(fromActions.UpdateArticleSuccess, (state, { kind }) => { return { ...state, kind } }),
+      on(fromActions.UpdateArticleFail, (state, { kind, reason }) => { return { ...state, kind } }),
+    )(state, action)
+  }

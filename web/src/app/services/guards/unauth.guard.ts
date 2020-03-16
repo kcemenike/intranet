@@ -11,7 +11,9 @@ import { map ,  tap ,  catchError } from 'rxjs/operators'
 
 import { AuthService } from '../core/auth.service'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UnauthGuard implements CanActivate {
   constructor (protected router: Router, protected auth: AuthService) {}
 

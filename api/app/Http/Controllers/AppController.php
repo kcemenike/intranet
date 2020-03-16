@@ -8,7 +8,7 @@ class AppController extends Controller
 {
     public function index()
     {
-        $areas = Area::latest()->get();
+        $areas = Area::latest()->paginate($this->perPage);
 
         return response(['data' => $areas ], 200);
     }

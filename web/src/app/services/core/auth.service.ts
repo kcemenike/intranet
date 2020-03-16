@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 
-import { forkJoin ,  Observable ,  of } from 'rxjs'
+import { forkJoin, Observable, of } from 'rxjs'
 import { mergeMap, map, catchError } from 'rxjs/operators'
 
 import { Config } from './config.service'
@@ -9,15 +9,18 @@ import { TokenContract } from '../contracts/store/token.contract'
 import { QueryActions } from '../contracts/store/query.contract'
 import { RoutingStateService } from './routing-state.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
+
   _intendedUrl: string = '/'
-  signInUrl: string = '/sign-in'
-  dashboardUrl: string = '/' // use '/x' for dashboard
+  signInUrl: string = '/gate/sign-in'
+  dashboardUrl: string = '/user/dashbord'
 
   set intendedUrl(url: string) {
     if (url.includes('sign-in') || url.includes('sign-out')) {
-      this._intendedUrl = this.dashboardUrl
+      this._intendedUrl = this.config.pick<string>('auth.dashboard')
     } else {
       this._intendedUrl = url
     }
@@ -34,12 +37,16 @@ export class AuthService {
     private routingState: RoutingStateService,
   ) {
     forkJoin(
-      config.select<string>('urls.signIn'),
-      config.select<string>('urls.dashboard'),
+      config.select<string>('auth.signInUrl'),
+      config.select<string>('auth.dashboardUrl'),
     ).subscribe(([signInUrl, dashboardUrl]) => {
       this.signInUrl = signInUrl
       this.dashboardUrl = dashboardUrl
     })
+  }
+ 
+  prevUrl() {
+    return this.routingState.getPreviousUrl()
   }
 
   signIn(email: string, password: string): Observable<boolean> {
@@ -50,18 +57,24 @@ export class AuthService {
         })
       }),
       map((token) => {
-        return !!token
+        return !!token.accessToken
       }),
     )
   }
 
   signOut(): Observable<boolean> {
     return forkJoin(
-      this.local.update('token', null),
-      this.local.update('hashId', null),
-      this.local.update('cart', null),
+      this.config.select<string>('store.remote.urls.base'),
     ).pipe(
-      map(([token, hashId, cart]) => {
+      mergeMap(([baseUrl]) => {
+        return this.remote.aPost(`${baseUrl}/api/auth/logout`, { })
+      }),
+      mergeMap((status) => {
+        return forkJoin(
+          this.local.update('token', null),
+        )
+      }),
+      map(([token]) => {
         return !null
       }),
     )
@@ -76,14 +89,13 @@ export class AuthService {
   }
 
   user<U = any>(): Observable<U> {
-    return this.remote
-      .query<U>([{ [QueryActions.first]: [] }], 'users/auth')
-      .pipe(
-        catchError((e) => {
-          // this.notif.snackbar('Authentication', 'Unable to sign in')
-          return of(undefined)
-        }),
-      )
+    return forkJoin(
+      this.config.select<string>('store.remote.urls.base'),
+    ).pipe(
+      mergeMap(([baseUrl]) => {
+        return this.remote.aGet(`${baseUrl}/api/auth/user`)
+      })
+    )
   }
 
   token(): string {
@@ -94,19 +106,11 @@ export class AuthService {
   getToken(email: string, password: string): Observable<TokenContract> {
     return forkJoin(
       this.config.select<string>('store.remote.urls.base'),
-      this.config.select<string>('store.remote.client.id'),
-      this.config.select<string>('store.remote.client.secret'),
     ).pipe(
-      mergeMap(([baseUrl, clientId, clientSecret]) => {
-        return this.remote.aPost(`${baseUrl}/oauth/token`, {
-          grant_type: 'password',
-          client_id: clientId,
-          client_secret: clientSecret,
-          username: email,
-          password: password,
-          scope: '',
-        })
+      mergeMap(([baseUrl]) => {
+        return this.remote.aPost(`${baseUrl}/api/auth/login`, { email, password })
       }),
     )
   }
+
 }

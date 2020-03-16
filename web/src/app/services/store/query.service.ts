@@ -9,7 +9,9 @@ import {
   QueryActionsContract } from '../contracts/store/query.contract'
 import { isNullOrUndefined } from '../core/utils.functions'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Query {
     static readonly Actions = QueryActions;
 

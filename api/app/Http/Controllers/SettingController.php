@@ -49,6 +49,7 @@ class SettingController extends Controller
         $setting = Setting::where([
             'key' => $key
         ])->firstOrFail();
+        
         return response(['data' => $setting->value ], 200);
     }
 }

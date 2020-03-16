@@ -20,9 +20,6 @@ export function setInjector(anInjector: Injector) {
   }
 }
 
-export function inject(key: any, data: any){
-}
-
 export function outject(service: any): any {
   return injector.get(service)
 }

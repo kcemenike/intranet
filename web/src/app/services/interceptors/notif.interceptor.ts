@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpInterceptor, HttpResponse, HttpErrorRespo
 
 import { finalize, tap, retryWhen, zip, mergeMap, catchError } from 'rxjs/operators'
 import { range ,  timer ,  empty ,  of, throwError } from 'rxjs'
+import { ToastService } from 'src/app/webgets/toast/toast.service'
 
 export class LoaderServiceContract {
   start (type?: string) {}
@@ -11,14 +12,15 @@ export class LoaderServiceContract {
   toast (message: string, title?: string) {}
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NotifInterceptor implements HttpInterceptor {
   constructor (
-    private notif: LoaderServiceContract,
+    private toast: ToastService,
   ) {}
 
   intercept (req: HttpRequest<any>, next: HttpHandler) {
-    this.notif.start()
 
     // extend server response observable with logging
     return next.handle(req).pipe(
@@ -29,7 +31,6 @@ export class NotifInterceptor implements HttpInterceptor {
         return attempts.pipe(
           zip(range(1, 4)),
           mergeMap(([error, i]) => {
-            this.notif.start('query')
             if (i > 2) {
               return throwError(error)
             }
@@ -41,8 +42,6 @@ export class NotifInterceptor implements HttpInterceptor {
       // catchError http errors and turn to observable of undefined
       catchError((e) => {
         let title, message
-
-        this.notif.start('buffer')
 
         if (e.error instanceof ErrorEvent) {
           // A client-side or network error occurred. Handle it accordingly.
@@ -64,6 +63,7 @@ export class NotifInterceptor implements HttpInterceptor {
         }
 
         console.error({ title, message });
+        this.toast.show(message, ToastService.FAILURE, { headertext: title })
         
         // catche //re throw
         // throw {title, message}
@@ -71,9 +71,7 @@ export class NotifInterceptor implements HttpInterceptor {
         // return empty()
         return throwError({ title, message})
       }),
-      finalize(() => {
-        this.notif.stop()
-      }),
+      finalize(() => {}),
     )
   }
 }

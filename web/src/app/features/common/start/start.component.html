@@ -1,1 +1,25 @@
-<p>start works!</p>
+<div class="m-0 p-5 row">
+
+    <div class="col-8 mx-auto my-5  text-center">
+        <h1 class="display-4 font-weight-normal">FIPL Mini Intranet</h1>
+        <p class="lead font-weight-normal">First Independent Power Limited is a company in the business of power generation in Nigeria located in Rivers State. We own and operate 4 gas turbine power plants within Rivers State located in Trans-Amadi Port-Harcourt, Afam, Omoku and Eleme.</p>
+        <a class="btn btn-primary" [routerLink]="['/gate/sign-in']">Login</a>
+    </div>
+
+    <div class="col-md-12" *ngFor="let article of articles; let i = index">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col-auto d-none d-lg-block" *ngIf="i%2 != 0">
+                <img class="bd-placeholder-img" width="200" height="250" [src]="article.avatar.url" role="img"/>
+            </div>
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">{{ article.tags.join(', ') }}</strong>
+                <h3 class="mb-0">{{ article.title }}</h3>
+                <p class="card-text mb-auto">{{ article.description }}</p>
+            </div>
+            <div class="col-auto d-none d-lg-block" *ngIf="i%2 == 0">
+                <img class="bd-placeholder-img" width="200" height="250" [src]="article.avatar.url" role="img"/>
+            </div>
+        </div>
+    </div>
+
+</div>

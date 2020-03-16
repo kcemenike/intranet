@@ -10,7 +10,9 @@ export interface ActionEvent {
   [key: string]: any
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ActionEmitter<T extends ActionEvent = ActionEvent> {
   actions: Subject<T> = new Subject<T>()
 

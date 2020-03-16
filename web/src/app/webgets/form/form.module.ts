@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core'
-import { FormControl, ValidationErrors } from '@angular/forms';
-import { FormComponent } from 'src/app/features/explorer/form/form.component';
+import { FormControl, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormComponent } from './form.component';
 
 export function emailValidatorMessage(err, field: FormlyFieldConfig) {
   return `"${field.formControl.value}" is not a valid email address.`;
@@ -22,10 +22,12 @@ export function telValidator(control: FormControl): ValidationErrors {
 
 @NgModule({
   declarations: [
-    CommonModule,
     FormComponent,
   ],
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     FormlyModule.forChild({
       types: [],      
       validators: [

@@ -1,13 +1,4 @@
-import { Routes } from '@angular/router'
-import { UserComponent } from './user.component'
 import { FormContract } from 'src/app/services/contracts'
-
-export const USER_ROUTES: Routes = [
-  {
-    path: '',
-    component: UserComponent
-  }
-]
 
 export interface AnalyticsContract{
     id: string;

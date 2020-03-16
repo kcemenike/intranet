@@ -7,7 +7,9 @@ export type NigerianStateType = string | ''
 // - K + f(state) C
 // K + f(api actual distance) A
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ShippingPricerService {
   //get config from app preference
   flatRate() {}

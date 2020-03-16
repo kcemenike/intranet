@@ -17,7 +17,7 @@ import {
 
 export const NORMAL_JSON_HEADER = {
   'Content-Type': 'application/json',
-  Accept: 'application/json',
+  'Accept': 'application/json',
 }
 
 export const FILE_JSON_HEADER = {}
@@ -33,7 +33,6 @@ export class RemoteWrapper {
     isFile: boolean = false,
   ): Observable<M> {
     this.agent = outject(HttpClient)
-
     // start request and hope things goes as planned
     return this.agent
       .request(method, url, {

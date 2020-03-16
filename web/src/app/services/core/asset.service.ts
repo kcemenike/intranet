@@ -11,8 +11,11 @@ export const ASSET_LOCATION = new InjectionToken<string>('asset.location')
  * atleast try to save the situation
  * fails silently, if the matter cannot be helped
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Asset {
+
   constructor(
     @Optional()
     @Inject(ASSET_LOCATION)
@@ -69,4 +72,5 @@ export class Asset {
     this._location = newLocation
     return this
   }
+  
 }

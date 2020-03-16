@@ -9,7 +9,9 @@ export interface Script {
   loaded: boolean
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ScriptLoaderService {
   private scripts: Script[] = []
 

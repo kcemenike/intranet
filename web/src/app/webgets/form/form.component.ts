@@ -6,8 +6,6 @@ import {
   EventEmitter,
   OnDestroy,
   InjectionToken,
-  Optional,
-  Inject,
   AfterViewInit,
   ChangeDetectionStrategy,
 } from '@angular/core'
@@ -33,19 +31,12 @@ export class FormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private actionEmitter: ActionEmitter,
-    @Optional()
-    @Inject(WG_FORM_DATA)
-    private data: FormContract,
-  ) {
-    this.form = this.form
-      ? this.form
-      : this.data
-  }
+  ) {}
 
   ngOnInit() {
     // unfreeze input data to solve 'array|object cannot be extented error thrown by ngx-formly'
     this.fields = this.form.fields.map((field) => deepCopy(field))
-    this.payload = deepCopy(untransform(this.filterResourceToModelKeysOnly(this.form.resource)))
+    // this.payload = deepCopy(untransform(this.filterResourceToModelKeysOnly(this.form.resource)))
   }
 
   ngAfterViewInit() {}

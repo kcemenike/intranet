@@ -1,14 +1,10 @@
-import { Action } from '@ngrx/store';
+import { Action, createAction } from '@ngrx/store';
 
-export enum UserActionTypes {
-  LoadUsers = '[User] Load Users',
-  
-  
-}
+export const Initialise = createAction(
+  '[Gate] Initialise'
+);
 
-export class LoadUsers implements Action {
-  readonly type = UserActionTypes.LoadUsers;
-}
-
-
-export type UserActions = LoadUsers;
+// export const SignInStart = createAction(
+//   '[Gate] SignInStart',
+//   props<UserContract>()
+// );

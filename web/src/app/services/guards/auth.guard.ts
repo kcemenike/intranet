@@ -12,7 +12,9 @@ import { map ,  tap ,  catchError } from 'rxjs/operators'
 
 import { AuthService } from '../core/auth.service'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(protected router: Router, protected auth: AuthService) {}
 

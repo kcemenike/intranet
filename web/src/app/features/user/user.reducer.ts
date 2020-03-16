@@ -1,23 +1,18 @@
 
-import { UserActions, UserActionTypes } from './user.actions';
+
+import { createReducer, on } from '@ngrx/store';
+import { UserConfigContract, USER_CONFIG } from './user.config';
+import * as fromActions from './user.actions';
 
 export const userFeatureKey = 'user';
 
-export interface State {
+export type State = UserConfigContract
 
-}
+export const initialState: State = USER_CONFIG
 
-export const initialState: State = {
-
-};
-
-export function reducer(state = initialState, action: UserActions): State {
-  switch (action.type) {
-
-    case UserActionTypes.LoadUsers:
-      return state;
-
-    default:
-      return state;
-  }
+export function reducer(state: State, action): State {
+  return createReducer(initialState,
+    on(fromActions.Initialise, (state) => state),
+    // on(fromActions.SignInStart, (state, user) => { return { ...state, user } }),
+  )(state, action)
 }

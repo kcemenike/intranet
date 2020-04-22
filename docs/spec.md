@@ -11,14 +11,6 @@ Web based community for simple teams
 + Photo Gallery
 + Chats? (third-party plugin)
 
-# Misc
-+ portal.fipl-ng.com
-+ isaiahiroko
-+ PASSword2019@!
-
-+ 192.168.26.10
-+ admin
-+ SWIF....
 
 # Entities
 + Roles
